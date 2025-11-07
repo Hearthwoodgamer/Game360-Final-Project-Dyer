@@ -1,4 +1,4 @@
-# Game360-Final-Project
+# Game360-Final-Project-Dyer
 # Task 3: Complete Patterns Integration
 
 # Project Evolution
