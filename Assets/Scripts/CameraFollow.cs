@@ -9,6 +9,7 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 position = transform.position;  
         position.x = target.position.x;
+        //position.y = target.position.y;
         transform.position = position;
     }
 }
