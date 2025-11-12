@@ -2,33 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraMove : MonoBehaviour
 {
-    public GameObject player;
-    public float offset;
-    public float offsetSmoothing;
-    private Vector3 playerPosition;
 
-    // Start is called before the first frame update
-    void Start()
+    public Transform followTransform;
+    public BoxCollider2D mapBounds;
+
+    private float xMin, xMax, yMin, yMax;
+    private float camY, camX;
+    private float camOrthsize;
+    private float cameraRatio;
+    private Camera mainCam;
+
+    private void Start()
     {
-
+        xMin = mapBounds.bounds.min.x;
+        xMax = mapBounds.bounds.max.x;
+        yMin = mapBounds.bounds.min.y;
+        yMax = mapBounds.bounds.max.y;
+        mainCam = GetComponent<Camera>();
+        camOrthsize = mainCam.orthographicSize;
+        cameraRatio = (xMax + camOrthsize) / 11.7f;
     }
-
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        playerPosition = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
+        camY = Mathf.Clamp(followTransform.position.y, yMin + camOrthsize, yMax - camOrthsize);
+        camX = Mathf.Clamp(followTransform.position.x, xMin + cameraRatio, xMax - cameraRatio);
+        this.transform.position = new Vector3(camX, camY, this.transform.position.z);
 
-        if (player.transform.localScale.x > 0f)
-        {
-            playerPosition = new Vector3(playerPosition.x + offset, playerPosition.y, playerPosition.z);
-        }
-        else
-        {
-            playerPosition = new Vector3(playerPosition.x - offset, playerPosition.y, playerPosition.z);
-        }
 
-        transform.position = Vector3.Lerp(transform.position, playerPosition, offsetSmoothing * Time.deltaTime);
     }
 }
