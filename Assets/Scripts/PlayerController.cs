@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage()
     {
         GameManager.Instance.PlayerDied();
+        GameManager.Instance.AddScore(-5);
         Respawn();
     }
 
