@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text timerText;
     public TMP_Text stateText;
     public TMP_Text coinText;
+    public TMP_Text finalScoreText;
     public GameObject gameOverPanel;
     public GameObject victoryPanel;
     public GameObject pauseMenu;
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
 
         // Subscribe to events (OBSERVER PATTERN)
         EventManager.Subscribe("OnScoreChanged", UpdateScore);
+        EventManager.Subscribe("OnFinalScoreChanged", updateFinalScore);
         EventManager.Subscribe("OnPlayerStateChanged", UpdateStateDisplay);
         EventManager.Subscribe("OnGameOver", ShowGameOver); // GAME OVER
         EventManager.Subscribe("OnLevelComplete", ShowVictory); // VICTORY
@@ -62,6 +64,7 @@ public class UIManager : MonoBehaviour
     {
         // Unsubscribe to prevent errors on scene change
         EventManager.Unsubscribe("OnScoreChanged", UpdateScore);
+        EventManager.Unsubscribe("OnFinalScoreChanged", updateFinalScore);
         EventManager.Unsubscribe("OnPlayerStateChanged", UpdateStateDisplay);
         EventManager.Unsubscribe("OnGameOver", ShowGameOver);
         EventManager.Unsubscribe("OnLevelComplete", ShowVictory);
@@ -74,9 +77,21 @@ public class UIManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + scoreData.ToString();
+            
+            scoreText.text = "Score: " + scoreData.ToString(); 
         }
     }
+
+    void updateFinalScore(object scoreData)
+    {
+        if (finalScoreText != null)
+        {
+            float finalTime = GameManager.Instance.GetTimeRemaining();
+            float finalScore = (float)scoreData;
+            finalScoreText.text = "FInal Score: " + finalScore * finalTime;
+        }
+    }
+         
 
     void UpdateStateDisplay(object stateData)
     {
