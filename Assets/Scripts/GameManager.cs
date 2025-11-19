@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
         PauseGame();
         EventManager.TriggerEvent("OnLevelComplete", score);
+        EventManager.TriggerEvent("OnFinalScoreChanged", score);
     }
 
     void GameOver()

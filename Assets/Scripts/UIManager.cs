@@ -1,5 +1,7 @@
 ﻿using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+
 
 public class UIManager : MonoBehaviour
 {
@@ -87,8 +89,16 @@ public class UIManager : MonoBehaviour
         if (finalScoreText != null)
         {
             float finalTime = GameManager.Instance.GetTimeRemaining();
-            float finalScore = (float)scoreData;
-            finalScoreText.text = "FInal Score: " + finalScore * finalTime;
+            float finalScore = GameManager.Instance.GetScore();
+            if (finalScore < 0)
+            {
+                finalScore = -finalScore;
+                finalScore = 100 / (finalScore);
+                
+                
+            }
+            finalScoreText.text = "Final Score: " + (finalScore) * finalTime;
+            
         }
     }
          
