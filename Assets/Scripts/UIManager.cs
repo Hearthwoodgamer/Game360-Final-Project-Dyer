@@ -90,14 +90,18 @@ public class UIManager : MonoBehaviour
         {
             float finalTime = GameManager.Instance.GetTimeRemaining();
             float finalScore = GameManager.Instance.GetScore();
+            float ultimateScore;
             if (finalScore < 0)
             {
                 finalScore = -finalScore;
                 finalScore = 100 / (finalScore);
                 
                 
+                
+                
             }
-            finalScoreText.text = "Final Score: " + (finalScore) * finalTime;
+            ultimateScore = finalScore * finalTime;
+            finalScoreText.text = "Final Score: " + ultimateScore.ToString("n0");
             
         }
     }
