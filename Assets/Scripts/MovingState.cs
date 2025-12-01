@@ -8,13 +8,26 @@ public class MovingState : PlayerState
     }
 
 
-    //int dashcharge = 1;
+    int dashcharge = 1;
     public override void UpdateState(PlayerController player)
     {
-        float horizontal = Input.GetAxis("Horizontal");
+        if (player.IsGrounded())
 
+            dashcharge = 1;
+
+        float horizontal = Input.GetAxis("Horizontal");
+        
         Vector2 velocity = player.rb.linearVelocity;
         velocity.x = horizontal * player.moveSpeed;
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashcharge == 1)
+        {
+            dashcharge = 0;
+            
+            velocity.x = horizontal * player.dashForce * player.moveSpeed;
+            player.rb.linearVelocity = velocity;
+            Debug.Log("Dash used");
+        }
+
         player.rb.linearVelocity = velocity;
 
         if (horizontal < 0)
@@ -32,24 +45,30 @@ public class MovingState : PlayerState
             player.ChangeState(new IdleState());
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             player.Fire();
         }
 
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            player.Fire1();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            player.Fire2();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            player.Fire3();
+        }
+
+
+
         
-        //if (player.IsGrounded())
-        //{
-            //dashcharge = 1;
-        //}
-        //if (Input.GetKeyDown(KeyCode.LeftShift) && dashcharge == 1)
-        //{
-            //dashcharge = 0;
-            //Vector2 dashvelocity = player.rb.linearVelocity;
-            //dashvelocity.x = horizontal * player.dashForce;
-            //player.rb.linearVelocity = dashvelocity;
-            //Debug.Log("Dash used");
-        //}
+        
     }
 
     public override void ExitState(PlayerController player) { }

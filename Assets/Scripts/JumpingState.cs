@@ -15,7 +15,7 @@ public class JumpingState : PlayerState
             AudioManager.Instance.PlayJumpSound();
         }
     }
-
+    int dashcharge = 1;
     public override void UpdateState(PlayerController player)
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -39,10 +39,36 @@ public class JumpingState : PlayerState
                 player.ChangeState(new IdleState());
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             player.Fire();
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            player.Fire1();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            player.Fire2();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            player.Fire3();
+        }
+        if (player.IsGrounded())
+
+            dashcharge = 1;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashcharge == 1)
+        {
+            dashcharge = 0;
+            Vector2 dashvelocity = player.rb.linearVelocity;
+            dashvelocity.x = horizontal * player.dashForce;
+            player.rb.linearVelocity = dashvelocity;
+            Debug.Log("Dash used");
         }
     }
 

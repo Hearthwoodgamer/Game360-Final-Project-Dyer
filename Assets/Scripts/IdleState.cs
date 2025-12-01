@@ -19,10 +19,27 @@ public class IdleState : PlayerState
             player.ChangeState(new MovingState());
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             player.Fire();
         }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            player.Fire1();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            player.Fire2();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            player.Fire3();
+        }
+
+
     }
 
     public override void ExitState(PlayerController player) { }

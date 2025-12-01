@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     [Header("Combat")]
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public Transform firePoint1;
+    public Transform firePoint2;
+    public Transform firePoint3;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -71,10 +74,44 @@ public class PlayerController : MonoBehaviour
         {
 
             
-            Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             AudioManager.Instance.PlayShootSound();
         }
     }
+
+    public void Fire1()
+    {
+        if (bulletPrefab != null && firePoint1 != null)
+        {
+
+
+            Instantiate(bulletPrefab, firePoint1.position, firePoint1.rotation);
+            AudioManager.Instance.PlayShootSound();
+        }
+    }
+
+    public void Fire2()
+    {
+        if (bulletPrefab != null && firePoint2 != null)
+        {
+
+
+            Instantiate(bulletPrefab, firePoint2.position, firePoint2.rotation);
+            AudioManager.Instance.PlayShootSound();
+        }
+    }
+
+    public void Fire3()
+    {
+        if (bulletPrefab != null && firePoint3 != null)
+        {
+
+
+            Instantiate(bulletPrefab, firePoint3.position, firePoint3.rotation);
+            AudioManager.Instance.PlayShootSound();
+        }
+    }
+
 
     public void TakeDamage()
     {
