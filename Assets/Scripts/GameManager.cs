@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         EventManager.TriggerEvent("OnFinalScoreChanged", score);
     }
 
-    void GameOver()
+    public void GameOver()
     {
         Debug.Log("💀 GAME OVER");
         isGameActive = false;

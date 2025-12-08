@@ -143,6 +143,8 @@ public class UIManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
+            AudioManager.Instance.musicSource.Stop();
+            AudioManager.Instance.defeat.Play();
             Debug.Log("Game Over Panel activated");
         }
         else
@@ -170,6 +172,8 @@ public class UIManager : MonoBehaviour
         if (victoryPanel != null)
         {
             victoryPanel.SetActive(true);
+            AudioManager.Instance.musicSource.Stop();
+            AudioManager.Instance.victory.Play();
             Debug.Log("Victory Panel activated");
         }
         else

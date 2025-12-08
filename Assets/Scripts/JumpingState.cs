@@ -1,4 +1,7 @@
+using JetBrains.Annotations;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class JumpingState : PlayerState
 {
@@ -15,7 +18,11 @@ public class JumpingState : PlayerState
             AudioManager.Instance.PlayJumpSound();
         }
     }
-    int dashcharge = 1;
+    public int canDash = 1;
+    public bool isDashing;
+    public float dashingTime = 0.2f;
+    public float dashingCooldown = 1f;
+    
     public override void UpdateState(PlayerController player)
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -60,17 +67,30 @@ public class JumpingState : PlayerState
         }
         if (player.IsGrounded())
 
-            dashcharge = 1;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashcharge == 1)
+       
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash == 1)
         {
-            dashcharge = 0;
-            Vector2 dashvelocity = player.rb.linearVelocity;
-            dashvelocity.x = horizontal * player.dashForce;
-            player.rb.linearVelocity = dashvelocity;
+            canDash = 0;
+            isDashing = true;
+            float orginialGravity = player.rb.gravityScale;
+            while (isDashing && dashingTime >= 0f)
+            {
+                dashingTime -= 0.1f;    
+                player.rb.gravityScale = 0f;
+                velocity.x = horizontal * player.dashForce;
+            }
+
+            player.rb.gravityScale = orginialGravity;
+            isDashing = false;
+            dashingTime = 0.2f;
+           
+            canDash = 1;
             Debug.Log("Dash used");
         }
     }
+
+    
 
     public override void ExitState(PlayerController player) { }
 

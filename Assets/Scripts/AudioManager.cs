@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     public AudioSource musicSource;
+    public AudioSource victory;
+    public AudioSource defeat;
     public AudioSource sfxSource;
 
     [Header("Sound Effects")]

@@ -117,8 +117,8 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage()
     {
         GameManager.Instance.PlayerDied();
-        
-        Respawn();
+        GameManager.Instance.GameOver();
+        //Respawn();
     }
 
     void Respawn()
